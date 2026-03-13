@@ -5,21 +5,17 @@ function App() {
 
     const [task, setTask] = useState("")
 
-    // Load all tasks from localStorage
     const [todos, setTodos] = useState(() => {
         const localValue = localStorage.getItem("todos")
         if (localValue == null) return []
 
-        // Filter out completed tasks only on initial load
         return JSON.parse(localValue).filter(todo => !todo.completed)
     })
 
-    // Save all tasks (including completed ones) whenever todos change
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos))
     }, [todos])
 
-    // Add new task
     function addTodo() {
         if (task.trim() === "") return
 
@@ -35,7 +31,6 @@ function App() {
         setTask("")
     }
 
-    // Toggle completed status
     function toggleTodo(id) {
         setTodos(currentTodos =>
             currentTodos.map(todo =>
@@ -44,7 +39,6 @@ function App() {
         )
     }
 
-    // Delete task
     function deleteTodo(id) {
         setTodos(currentTodos => currentTodos.filter(todo => todo.id !== id))
     }
